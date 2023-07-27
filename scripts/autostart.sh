@@ -1,5 +1,5 @@
 #!/bin/bash
 
-/home/andrew/github/dwm-titus/scripts/status &
+$HOME/github/dwm-config/scripts/status &
 /usr/bin/lxpolkit &
 feh --bg-fill --randomize --recursive $HOME/Pictures/backgrounds &
