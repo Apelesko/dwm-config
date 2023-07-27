@@ -1,0 +1,1 @@
+# My configurations for Dynamic Window Manager (DWM)
