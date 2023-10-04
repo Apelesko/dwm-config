@@ -80,6 +80,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_x,      spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      spawn,          SHCMD ("brave-browser")},
+	{ MODKEY|ControlMask,			XK_b,	   spawn,		   SHCMD ("brave-browser --incognito")},
 	{ MODKEY,                       XK_e,      spawn,          SHCMD ("thunar")},
 	{ 0,                            0x1008ff02, spawn,         SHCMD ("xbacklight -inc 10")},
 	{ 0,                            0x1008ff03, spawn,         SHCMD ("xbacklight -dec 10")},

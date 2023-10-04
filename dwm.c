@@ -299,7 +299,7 @@ static const char autostartblocksh[] = "autostart_blocking.sh";
 static const char autostartsh[] = "autostart.sh";
 static const char broken[] = "broken";
 static const char dwmdir[] = "github/dwm-config/scripts";
-static const char localshare[] = "";
+static const char localshare[] = "~/.local";
 static char stext[256];
 static int screen;
 static int sw, sh;           /* X display screen geometry width, height */
