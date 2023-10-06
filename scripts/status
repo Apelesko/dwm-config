@@ -1,42 +1,81 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# Change this depending on your battery in /sys/class/power_supply/
-battery="BAT0";
+# Initialize
+printf "$$" > ~/.cache/pidofbar
+sec=0
 
-has_battery() {
-    if [ -d /sys/class/power_supply/$battery ]; then
-        return 0;
+# Update functions
+update_cpu() {
+  cpu=$(awk '{print $1}' /proc/loadavg)
+}
+
+update_memory() {
+  memory=$(free -h | awk 'NR==2 {print $3}')
+}
+
+update_time() {
+  time=$(date "+%b %d %H:%M ")
+}
+
+update_weather() {
+  weather=$(curl -s "wttr.in/dallas?format=1" | cut -c1)
+}
+
+update_bat() {
+  if [[ -e /sys/class/power_supply/BAT0/status ]]; then
+    bat_status=$(< /sys/class/power_supply/BAT0/status)
+    if [[ -e /sys/class/power_supply/BAT0/capacity ]]; then
+      bat_capacity=$(< /sys/class/power_supply/BAT0/capacity)
+      bat="$bat_status $bat_capacity%"
+    else
+      bat="$bat_status (capacity not available)"
     fi
-    return 1;
-}
-get_battery_status() {
-    charge="$(get_charge)"
-    echo ""$icon" "$charge"%"
+  fi
 }
 
-get_charging_status() {
-    cat "/sys/class/power_supply/$battery/status"
+update_vol() {
+  vol="奄 $(pactl list sinks | awk '/Volume:/ {print $5}' | head -n 1 | tr -d '%')%"
 }
 
-get_charge() {
-    cat "/sys/class/power_supply/$battery/capacity"
+update_backlight() {
+  if [[ -e /sys/class/backlight/intel_backlight/actual_brightness ]]; then
+    actual_brightness=$(< /sys/class/backlight/intel_backlight/actual_brightness)
+    max_brightness=$(< /sys/class/backlight/intel_backlight/max_brightness)
+    backlight="☀$((actual_brightness * 100 / max_brightness))%"
+  else
+    backlight="Backlight not available"
+  fi
 }
 
-get_datetime() {
-    date +"%a %d %b %Y | %I:%M %p %Z"
+# Display function
+display() {
+  status=""
+  [[ -n "$bat" ]] && status+="$bat "
+  [[ -n "$backlight" ]] && status+="$backlight "
+  [[ -n "$vol" ]] && status+="$vol "
+  [[ -n "$time" ]] && status+="$time"
+  xsetroot -name "$status"
 }
 
-get_status() {
-    battery_status="";
-    if $(has_battery); then
-        battery_status=" $(get_battery_status) |";
-    fi
+# Set up signal handlers
+trap "update_vol; display" "RTMIN"
+trap "update_backlight; display" "RTMIN+1"
+trap "update_bat; display" "RTMIN+2"
 
-    echo "${battery_status} $(get_datetime)";
-}
+# Initial updates
+update_vol
+update_backlight
 
-while true
-do
-    xsetroot -name "$(get_status)";
-    sleep 1m;
+# Main loop
+while true; do
+  sleep 1
+  sec=$((sec + 1))
+  case $((sec % 60)) in
+    0) update_bat;;
+    [1-5]) 
+      update_time
+      update_vol
+      display
+      ;;
+  esac
 done
