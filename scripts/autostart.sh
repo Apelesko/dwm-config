@@ -5,3 +5,4 @@ $HOME/github/dwm-config/scripts/status &
 feh --bg-fill --randomize --recursive $HOME/Pictures/backgrounds &
 picom --config "$HOME/.config/picom.conf"
 xset s off -dpms #disabling things like turing off the monitor
+xsetroot -cursor_name left_ptr
