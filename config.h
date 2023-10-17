@@ -79,6 +79,8 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_x,      spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_t,      spawn,          SHCMD ("thorium-browser")},
+	{ MODKEY|ControlMask,			XK_t,	   spawn,		   SHCMD ("thorium-browser --incognito")},
 	{ MODKEY,                       XK_b,      spawn,          SHCMD ("brave-browser")},
 	{ MODKEY|ControlMask,			XK_b,	   spawn,		   SHCMD ("brave-browser --incognito")},
 	{ MODKEY,                       XK_e,      spawn,          SHCMD ("thunar")},
@@ -97,9 +99,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-  	{ MODKEY,                       XK_m,      fullscreen,     {0} },
+	{ MODKEY|ShiftMask,             XK_t,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY|ShiftMask,             XK_f,      setlayout,      {.v = &layouts[1]} },
+  	{ MODKEY|ShiftMask,             XK_m,      fullscreen,     {0} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_m,      togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -118,8 +120,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY|ControlMask|ShiftMask, XK_r,      spawn,          SHCMD("systemctl reboot")},
-	{ MODKEY|ControlMask|ShiftMask, XK_s,      spawn,          SHCMD("systemctl poweroff")},
+	{ MODKEY|ControlMask|ShiftMask, XK_r,      spawn,          SHCMD("/usr/sbin/shutdown -r now")},
+	{ MODKEY|ControlMask|ShiftMask, XK_s,      spawn,          SHCMD("/usr/sbin/shutdown now")},
 };
 
 /* button definitions */
