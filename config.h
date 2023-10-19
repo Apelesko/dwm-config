@@ -25,6 +25,20 @@ static const char *colors[][3]      = {
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 };
 
+static const char *const autostart[] = {
+	"xsetroot", "-cursor_name", "left_ptr", NULL,
+  	"xset", "s", "off", NULL,
+  	"xset", "s", "noblank", NULL,
+  	"xset", "-dkms", NULL,
+  	"lxpolkit", NULL,
+  	"picom", NULL,
+  	"sh", "-c", "$HOME/github/dwm-config/scripts/status", NULL,
+  	"sh", "-c", "$HOME/github/dwm-config/scripts/dbus", NULL,
+/*	"sh", "-c", "$HOME/github/dwm-config/scripts/setbackground", NULL, */
+	"sh", "-c", "feh --bg-fill --randomize --recursive $HOME/Pictures/backgrounds", NULL,
+	NULL /* terminate */
+};
+
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
