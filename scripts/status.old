@@ -59,6 +59,8 @@ display() {
 
 # Set up signal handlers
 trap "update_vol; display" "RTMIN"
+trap "update_backlight; display" "RTMIN+1"
+trap "update_bat; display" "RTMIN+2"
 
 # Initial updates
 update_vol
@@ -67,9 +69,13 @@ update_backlight
 # Main loop
 while true; do
   sleep 1
-  update_bat
-  update_backlight
-  update_time
-  update_vol
-  display
+  sec=$((sec + 1))
+  case $((sec % 60)) in
+    0) update_bat;;
+    [1-5]) 
+      update_time
+      update_vol
+      display
+      ;;
+  esac
 done
