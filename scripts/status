@@ -34,7 +34,13 @@ update_bat() {
 }
 
 update_vol() {
-  vol="奄 $(pactl list sinks | awk '/Volume:/ {print $5}' | head -n 1 | tr -d '%')%"
+  muted=$(pactl list sinks | awk '/Mute:/ {print $2}' | head -n 1)
+
+  if [ "$muted" == "yes" ]; then
+    vol="奄 Muted"
+  else
+    vol="奄 $(pactl list sinks | awk '/Volume:/ {print $5}' | head -n 1 | tr -d '%')%"
+  fi
 }
 
 update_backlight() {
