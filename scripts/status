@@ -39,7 +39,7 @@ update_vol() {
   if [ "$muted" == "yes" ]; then
     vol="奄 Muted"
   else
-    vol="奄 $(pactl list sinks | awk '/Volume:/ {print $5}' | head -n 1 | tr -d '%')%"
+    vol="奄$(pactl list sinks | awk '/Volume:/ {print $5}' | head -n 1 | tr -d '%')%"
   fi
 }
 
@@ -56,15 +56,12 @@ update_backlight() {
 # Display function
 display() {
   status=""
-  [[ -n "$bat" ]] && status+="$bat "
-  [[ -n "$backlight" ]] && status+="$backlight "
-  [[ -n "$vol" ]] && status+="$vol "
+  [[ -n "$bat" ]] && status+="$bat | "
+  [[ -n "$backlight" ]] && status+="$backlight | "
+  [[ -n "$vol" ]] && status+="$vol | "
   [[ -n "$time" ]] && status+="$time"
   xsetroot -name "$status"
 }
-
-# Set up signal handlers
-trap "update_vol; display" "RTMIN"
 
 # Initial updates
 update_vol
