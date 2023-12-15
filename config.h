@@ -14,7 +14,7 @@ static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const Bool viewontag         = True;     /* Switch view on tag switch */
-static const char *fonts[]          = { "monospace:size=12" };
+static const char *fonts[]          = { "monospace:size=12", "font-awesome:size=14" };
 static const char dmenufont[]       = "monospace:size=12";
 static const char col_gray1[]       = "#2E3440";
 static const char col_gray2[]       = "#3B4252";
@@ -95,8 +95,8 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_x,      spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_t,      spawn,          SHCMD ("thorium-browser")},
-	{ MODKEY|ControlMask,			XK_t,	   spawn,		   SHCMD ("thorium-browser --incognito")},
+	{ MODKEY,                       XK_f,      spawn,          SHCMD ("floorp")},
+	{ MODKEY|ControlMask,			XK_f,	   spawn,		   SHCMD ("floorp -private")},
 	{ MODKEY,                       XK_b,      spawn,          SHCMD ("brave-browser")},
 	{ MODKEY|ControlMask,			XK_b,	   spawn,		   SHCMD ("brave-browser --incognito")},
 	{ MODKEY,                       XK_e,      spawn,          SHCMD ("thunar")},

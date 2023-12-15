@@ -26,9 +26,11 @@ update_bat() {
     bat_status=$(< /sys/class/power_supply/BAT1/status)
     if [[ -e /sys/class/power_supply/BAT1/capacity ]]; then
       bat_capacity=$(< /sys/class/power_supply/BAT1/capacity)
-      bat="$bat_status $bat_capacity%"
+#      bat="$bat_status $bat_capacity%"
+      bat="$bat_capacity%"
     else
-      bat="$bat_status (capacity not available)"
+#      bat="$bat_status (capacity not available)"
+      bat=" (capacity not available)"
     fi
   fi
 }
